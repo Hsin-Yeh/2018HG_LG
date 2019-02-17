@@ -2,6 +2,7 @@
 #define MakePlots_h
 
 #include "setup_config.h"
+#include "TH2.h"
 #include "TProfile.h"
 #include "TFile.h"
 #include "TTree.h"
@@ -9,6 +10,10 @@ class MakePlots{
  public:
   MakePlots(setup_config *SC);
   ~MakePlots();
+
+  //Histogram members
+  TH2D *h_HG_LG [MAXBOARDS][MAXSKI][MAXCH];
+  TH2D *h_LG_TOT[MAXBOARDS][MAXSKI][MAXCH];
   
   //TProfile members
   TProfile *HG_LG [MAXBOARDS][MAXSKI][MAXCH];
