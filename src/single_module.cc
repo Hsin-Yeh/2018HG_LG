@@ -135,6 +135,8 @@ void single_module::Fill_Tprofile(){
   //   cout << moduleID_str << " not used in June TB!" << endl;
   //   return;  }
 
+  TCanvas* C = new TCanvas();
+
   TDirectory *dir;
   sprintf(title,"Module%i",moduleID_int);
  
@@ -152,6 +154,10 @@ void single_module::Fill_Tprofile(){
     TProfile *tpr_LGinj[MAXSKI];
     TProfile *tpr_TOTinj[MAXSKI];
 
+    TH2D *h_HGLG[MAXSKI];
+    TH2D *h_LGTOT[MAXSKI];
+    
+
   
     for(int chip = 0 ; chip < MAXSKI ; ++chip){
 
@@ -166,9 +172,13 @@ void single_module::Fill_Tprofile(){
       tpr_LGinj[chip] = new TProfile(title,title,400,0,4000,0,3000);
       sprintf(title,"TOTinj_M%i_chip%i_ch%i",moduleID_int,chip,inj_CH);
       tpr_TOTinj[chip] = new TProfile(title,title,400,0,4000,0,3000);
-    
-    }
 
+      sprintf(title,"Histo_HGLG_M%i_chip%i_ch%i",moduleID_int,chip,inj_CH);
+      h_HGLG[chip] = new TH2D(title,title,400,400,0,800,0,4000);
+      sprintf(title,"Histo_LGTOT_M%i_chip%i_ch%i",moduleID_int,chip,inj_CH);
+      h_LGTOT[chip] = new TH2D(title,title,200,200,0,800,0,2000);
+    }
+    
     for(int ev = 0 ; ev < nevents ; ++ev){
       T_Rawhit->GetEntry(ev);
       for(int hit = 0 ; hit < (int) HighGainADC->size() ; ++hit){
@@ -189,10 +199,18 @@ void single_module::Fill_Tprofile(){
 	tpr_HGinj[chip]->Fill(inj_daq,HG,1);
 	tpr_LGinj[chip]->Fill(inj_daq,LG,1);
 	tpr_TOTinj[chip]->Fill(inj_daq,TOT,1);
+
+	h_HGLG[chip]->Fill(LG,HG,1);
+	h_LGTOT[chip]->Fill(TOT,LG,1);
+	
       }
     }
   
     for(int chip = 0 ; chip < MAXSKI ; ++chip){
+
+      h_HGLG[chip]->Draw("CANDLEX3");
+      C->Update();
+      gPad->WaitPrimitive();
 
       if(tpr_HGLG[ chip ]->GetEntries() == 0){
 	continue;}	
@@ -203,6 +221,10 @@ void single_module::Fill_Tprofile(){
       tpr_HGLG[ chip ]->SetMarkerSize(1.2);
       tpr_HGLG[ chip ]->SetMarkerColor(chip+1);
       tpr_HGLG[ chip ]->Write(title,TObject::kOverwrite);
+      
+      tpr_HGLG[ chip ]->Draw();
+      C->Update();
+      gPad->WaitPrimitive();
   
       if(tpr_LGTOT[ chip ]->GetEntries() == 0){
 	continue;}

@@ -79,11 +79,11 @@ bool MakePlots::Init_TFile(string TPro_outputname){
 	  sprintf(p_name,"HG_LG_Module%d_chip%d_ch%d",moduleID,chip,ch*2);
 	  HG_LG[BD][chip][ch] = new TProfile(p_name,"",HGLGBIN,0,800,0,4000);
 	  sprintf(p_name,"Histo_HG_LG_Module%d_chip%d_ch%d",moduleID,chip,ch*2);
-	  h_HG_LG[BD][chip][ch] = new TH2D(p_name,"",HGLGBIN,HGLGBIN,0,800,0,4000);
+	  h_HG_LG[BD][chip][ch] = new TH2D(p_name,"",HGLGBIN,0,800,HGLGBIN,0,4000);
 	  sprintf(p_name,"LG_TOT_Module%d_chip%d_ch%d",moduleID,chip,ch*2);
 	  LG_TOT[BD][chip][ch] = new TProfile(p_name,"",LGTOTBIN,0,800,0,2000);
 	  sprintf(p_name,"Histo_LG_TOT_Module%d_chip%d_ch%d",moduleID,chip,ch*2);
-	  h_LG_TOT[BD][chip][ch] = new TH2D(p_name,"",LGTOTBIN,LGTOTBIN,0,800,0,4000);
+	  h_LG_TOT[BD][chip][ch] = new TH2D(p_name,"",LGTOTBIN,0,800,LGTOTBIN,0,2000);
 	  HG_LG[BD][chip][ch]->SetMarkerStyle(22);
 	  HG_LG[BD][chip][ch]->SetMarkerColor(chip+1);
 	  HG_LG[BD][chip][ch]->SetMarkerSize(1);
@@ -148,6 +148,7 @@ bool MakePlots::Check_Name(string fname){
 void MakePlots::Write_TProfile(){
   TPro_root->cd();
   cout << "Filling TProfiles ..." << endl;
+  TCanvas* C1 = new TCanvas();
   TDirectory *dir;
   char title[50];
   
@@ -168,9 +169,16 @@ void MakePlots::Write_TProfile(){
 	sprintf(title,"Histo_HGLG_chip%i_ch%i",chip,ch*2);
 	h_HG_LG[BD][chip][ch]->SetTitle(title);
 	h_HG_LG[BD][chip][ch]->Write(title,TObject::kOverwrite);
+	//h_HG_LG[BD][chip][ch]->Draw("CANDLEX(30)");
+	//h_HG_LG[BD][chip][ch]->Draw();
+	//C1->Update();
+	//gPad->WaitPrimitive();
 	sprintf(title,"LGTOT_chip%i_ch%i",chip,ch*2);
 	LG_TOT[BD][chip][ch]->SetTitle(title);
 	LG_TOT[BD][chip][ch]->Write(title,TObject::kOverwrite);
+	sprintf(title,"Histo_LGTOT_chip%i_ch%i",chip,ch*2);
+	h_LG_TOT[BD][chip][ch]->SetTitle(title);
+	h_LG_TOT[BD][chip][ch]->Write(title,TObject::kOverwrite);
       }
     }
   }
