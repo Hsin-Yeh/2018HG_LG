@@ -283,7 +283,7 @@ void TBReader::TProfile_Maker(setup_config *SC,MakePlots *M){
       M->h_HG_LG[BD_order][chip][ch]->Fill(LG,HG,1);
       if( TOT < 5 ) continue;
       M->LG_TOT[BD_order][chip][ch]->Fill(TOT,LG,1);      
-      //      M->h_LG_TOT[BD_order][chip][ch]->Fill(TOT,LG,1);
+      M->h_LG_TOT[BD_order][chip][ch]->Fill(TOT,LG,1);
     }    
   }
   cout << "End of looping evts" << endl;
