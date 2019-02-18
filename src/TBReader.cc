@@ -289,6 +289,11 @@ void TBReader::TProfile_Maker(setup_config *SC,MakePlots *M){
   cout << "End of looping evts" << endl;
 }
 
+/*
+double TBReader::Calculate_medium(double medium){
+}
+*/
+
 bool TBReader::Check_run_filled(TTree* tree){
   //Check if this run have already been filled
   int Filled_Runs = tree-> GetEntries();

@@ -174,9 +174,9 @@ void single_module::Fill_Tprofile(){
       tpr_TOTinj[chip] = new TProfile(title,title,400,0,4000,0,3000);
 
       sprintf(title,"Histo_HGLG_M%i_chip%i_ch%i",moduleID_int,chip,inj_CH);
-      h_HGLG[chip] = new TH2D(title,title,400,400,0,800,0,4000);
+      h_HGLG[chip] = new TH2D(title,title,400,0,800,400,0,4000);
       sprintf(title,"Histo_LGTOT_M%i_chip%i_ch%i",moduleID_int,chip,inj_CH);
-      h_LGTOT[chip] = new TH2D(title,title,200,200,0,800,0,2000);
+      h_LGTOT[chip] = new TH2D(title,title,200,0,800,200,0,2000);
     }
     
     for(int ev = 0 ; ev < nevents ; ++ev){
@@ -208,7 +208,11 @@ void single_module::Fill_Tprofile(){
   
     for(int chip = 0 ; chip < MAXSKI ; ++chip){
 
-      h_HGLG[chip]->Draw("CANDLEX3");
+      if(h_HGLG[ chip ]->GetEntries() == 0){
+	continue;}
+      sprintf(title,"HGLG_chip%i_ch%i_histo",chip,inj_CH);
+      h_HGLG[ chip ]->Write(title,TObject::kOverwrite);
+      h_HGLG[ chip ]->Draw();
       C->Update();
       gPad->WaitPrimitive();
 
@@ -221,11 +225,7 @@ void single_module::Fill_Tprofile(){
       tpr_HGLG[ chip ]->SetMarkerSize(1.2);
       tpr_HGLG[ chip ]->SetMarkerColor(chip+1);
       tpr_HGLG[ chip ]->Write(title,TObject::kOverwrite);
-      
-      tpr_HGLG[ chip ]->Draw();
-      C->Update();
-      gPad->WaitPrimitive();
-  
+        
       if(tpr_LGTOT[ chip ]->GetEntries() == 0){
 	continue;}
       sprintf(title,"LGTOT_chip%i_ch%i",chip,inj_CH);
