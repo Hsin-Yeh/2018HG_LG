@@ -81,7 +81,7 @@ bool MakePlots::Init_TFile(string TPro_outputname){
 	  sprintf(p_name,"HG_LG_Module%d_chip%d_ch%d",moduleID,chip,ch*2);
 	  HG_LG[BD][chip][ch] = new TProfile(p_name,"",HGLGBIN,0,800,0,4000);
 	  sprintf(p_name,"Histo_HG_LG_Module%d_chip%d_ch%d",moduleID,chip,ch*2);
-	  h_HG_LG[BD][chip][ch] = new TH2D(p_name,"",HGLGBIN,0,800,400,0,4000);
+	  h_HG_LG[BD][chip][ch] = new TH2D(p_name,"",HGLGBIN,0,800,1000,0,4000);
 	  sprintf(p_name,"LG_TOT_Module%d_chip%d_ch%d",moduleID,chip,ch*2);
 	  LG_TOT[BD][chip][ch] = new TProfile(p_name,"",LGTOTBIN,0,800,0,2000);
 	  sprintf(p_name,"Histo_LG_TOT_Module%d_chip%d_ch%d",moduleID,chip,ch*2);
@@ -102,7 +102,7 @@ bool MakePlots::Init_TFile(string TPro_outputname){
     }
   }
   return true;
-}
+ }
 void MakePlots::Init_Pointers(){
   for(int BD = 0 ; BD < MAXBOARDS ; ++BD){
     for(int chip = 0 ; chip < MAXSKI ; ++chip){
