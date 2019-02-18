@@ -47,6 +47,8 @@ bool MakePlots::Init_TFile(string TPro_outputname){
 	  sprintf(LGTOT_name,"Module%d/LGTOT_chip%d_ch%d",moduleID,chip,ch*2);
 	  HG_LG[BD][chip][ch] = (TProfile*)TPro_root->Get(HGLG_name);
 	  LG_TOT[BD][chip][ch] = (TProfile*)TPro_root->Get(LGTOT_name);
+	  sprintf(HGLG_name,"Module%d/Histo_HGLG_chip%d_ch%d",moduleID,chip,ch*2);
+	  h_HG_LG[BD][chip][ch] = (TH2D*)TPro_root->Get(HGLG_name);
 	  // Check TProfile exist
 	  if(TPro_history ->GetEntries() != 0){
 	    if(HG_LG[BD][chip][ch] == NULL || LG_TOT[BD][chip][ch] == NULL){
