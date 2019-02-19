@@ -12,8 +12,8 @@ class MakePlots{
   ~MakePlots();
 
   //Histogram members
-  TH2D *h_HG_LG [MAXBOARDS][MAXSKI][MAXCH];
-  //TH2D *h_LG_TOT[MAXBOARDS][MAXSKI][MAXCH];
+  //TH2D *h_HG_LG [MAXBOARDS][MAXSKI][MAXCH];
+  TH2D *h_LG_TOT[MAXBOARDS][MAXSKI][MAXCH];
   
   //TProfile members
   TProfile *HG_LG [MAXBOARDS][MAXSKI][MAXCH];
