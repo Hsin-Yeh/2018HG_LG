@@ -279,10 +279,10 @@ void TBReader::TProfile_Maker(setup_config *SC,MakePlots *M){
       else{
 	BD_order = SC->moduleID2BDorder.find(moduleID)->second;}
       if( LG < 5 ) continue;
-      M->HG_LG[BD_order][chip][ch]->Fill(LG,HG,1);
+      //      M->HG_LG[BD_order][chip][ch]->Fill(LG,HG,1);
       M->h_HG_LG[BD_order][chip][ch]->Fill(LG,HG,1);
       if( TOT < 5 ) continue;
-      M->LG_TOT[BD_order][chip][ch]->Fill(TOT,LG,1);      
+      //      M->LG_TOT[BD_order][chip][ch]->Fill(TOT,LG,1);      
       //M->h_LG_TOT[BD_order][chip][ch]->Fill(TOT,LG,1);
     }    
   }
