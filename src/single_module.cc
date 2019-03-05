@@ -217,7 +217,7 @@ void single_module::Fill_Tprofile(){
       if(h_LGTOT[ chip ]->GetEntries() == 0){
 	continue;}
       sprintf(title,"LGTOT_chip%i_ch%i_histo",chip,inj_CH);
-      h_HGLG[ chip ]->Write(title,TObject::kOverwrite);
+      h_LGTOT[ chip ]->Write(title,TObject::kOverwrite);
 
       if(tpr_HGLG[ chip ]->GetEntries() == 0){
 	continue;}	
