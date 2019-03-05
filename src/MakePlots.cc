@@ -50,7 +50,7 @@ bool MakePlots::Init_TFile(string TPro_outputname){
 	  sprintf(HGLG_name,"Module%d/Histo_HGLG_chip%d_ch%d",moduleID,chip,ch*2);
 	  h_HG_LG[BD][chip][ch] = (TH2D*)TPro_root->Get(HGLG_name);
 	  sprintf(LGTOT_name,"Module%d/Histo_LGTOT_chip%d_ch%d",moduleID,chip,ch*2);
-	  //h_LG_TOT[BD][chip][ch] = (TH2D*)TPro_root->Get(LGTOT_name);
+	  h_LG_TOT[BD][chip][ch] = (TH2D*)TPro_root->Get(LGTOT_name);
 	  // Check TProfile exist
 	  if(TPro_history ->GetEntries() != 0){
 	    if(HG_LG[BD][chip][ch] == NULL || LG_TOT[BD][chip][ch] == NULL){
@@ -87,7 +87,7 @@ bool MakePlots::Init_TFile(string TPro_outputname){
 	  sprintf(p_name,"LG_TOT_Module%d_chip%d_ch%d",moduleID,chip,ch*2);
 	  LG_TOT[BD][chip][ch] = new TProfile(p_name,"",LGTOTBIN,0,800,0,2000);
 	  sprintf(p_name,"Histo_LG_TOT_Module%d_chip%d_ch%d",moduleID,chip,ch*2);
-	  //h_LG_TOT[BD][chip][ch] = new TH2D(p_name,"",LGTOTBIN,0,800,LGTOTBIN,0,2000);
+	  h_LG_TOT[BD][chip][ch] = new TH2D(p_name,"",LGTOTBIN,0,800,LGTOTBIN,0,2000);
 	  HG_LG[BD][chip][ch]->SetMarkerStyle(22);
 	  HG_LG[BD][chip][ch]->SetMarkerColor(chip+1);
 	  HG_LG[BD][chip][ch]->SetMarkerSize(1);
@@ -173,16 +173,16 @@ void MakePlots::Write_TProfile(){
 	sprintf(title,"Histo_HGLG_chip%i_ch%i",chip,ch*2);
 	h_HG_LG[BD][chip][ch]->SetTitle(title);
 	h_HG_LG[BD][chip][ch]->Write(title,TObject::kOverwrite);
-	//h_HG_LG[BD][chip][ch]->Draw("CANDLEX(30)");
-	//h_HG_LG[BD][chip][ch]->Draw();
+	h_HG_LG[BD][chip][ch]->Draw("CANDLEX(30)");
+	h_HG_LG[BD][chip][ch]->Draw();
 	//C1->Update();
 	//gPad->WaitPrimitive();
 	sprintf(title,"LGTOT_chip%i_ch%i",chip,ch*2);
 	LG_TOT[BD][chip][ch]->SetTitle(title);
 	LG_TOT[BD][chip][ch]->Write(title,TObject::kOverwrite);
 	sprintf(title,"Histo_LGTOT_chip%i_ch%i",chip,ch*2);
-	//h_LG_TOT[BD][chip][ch]->SetTitle(title);
-	//h_LG_TOT[BD][chip][ch]->Write(title,TObject::kOverwrite);
+	h_LG_TOT[BD][chip][ch]->SetTitle(title);
+	h_LG_TOT[BD][chip][ch]->Write(title,TObject::kOverwrite);
       }
     }
   }
