@@ -11,7 +11,7 @@ string main_outpath = "./";
 string main_default_rootname = "TPro.root";
 string main_datainput = "./data_input.txt"; 
 string Module_configfile = "./configs/all_config.csv";
-int main_config = 2; // Run 179 ~ 722(config1), Run 751 ~ 1064(config2),
+int main_config = 3; // Run 179 ~ 722(config1), Run 751 ~ 1064(config2),
                 // Run 1079~1167(config3)
 // Using the first configuration so all boards are included
 // 6-Nov-2018 copy from
