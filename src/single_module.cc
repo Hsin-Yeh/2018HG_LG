@@ -313,53 +313,84 @@ void single_module::Setname(){
 }
 
 void single_module::Read_yaml(string yaml){
-  cout << "yaml file: " << yaml << endl;
 
-  ifstream yaml_in(yaml);
-  if(!yaml_in.is_open()){
-    Correct_path_message();
-    return;}
+    cout << "yaml file: " << yaml << endl;
+    
+    ifstream yaml_in(yaml);
+    if(!yaml_in.is_open()){
+	Correct_path_message();
+	return;
+    }
 
-  string line;
-  int line_label = 0;
+    string searchstr;
+    string line;
+    ifstream yamlFile(yamlFileName);
+    if(!yamlFile.is_open()){
+	cout << "Did not find injection file " << yamlFileName
+	     << ".\n Take this run as pedestal.(Inj_dac = 0)" << endl;
+    }
+    if(yamlFile.is_open()){
+	cout << "yamlFile = " << yamlFileName << endl;
+	while( true ) {
+	    if ( yamlFile.eof() ) break;
+	    getline (yamlFile, line);
+	  
+	    if ( line.find("channelIds:") != -1 ){
+		string tmp;
+		start = line.find("[");
+		end = line.find("]");
+		searchstr = line.substr(start+1,end-start+1);
+		inj_CH = atoi(searchstr.c_str());
+		inj_CH_vec.push_back(inj_CH);
 
-  while(true){
-    getline(yaml_in,line);
-    if(yaml_in.eof()) break;
-
-    if(line_label == 1){
-      if((int)line.find("sweep") != -1)
-	inj_sweep = true;
-      else{
-	inj_sweep = false;}    }
-
-    if(line_label == 2){
-      string before_str = "channelIds: [";
-      int start = line.find(before_str);
-      int end   = line.find("]");
-      inj_CH_str = line.substr(start+before_str.length(),end - before_str.length() - start);
-      if(inj_CH_str.length() != 0){
-	inj_CH_vec.clear();
-	istringstream iss (inj_CH_str);
-	string slice;
-	while(getline(iss,slice,',')){
-	  inj_CH = atoi(slice.c_str());
-	  inj_CH_vec.push_back(inj_CH);
+		if (start == -1) {
+		    getline(yamlFile, line);
+		    start = line.find_last_of("-");
+		    searchstr = line.erase(0,start+2);
+		    inj_CH = atoi(searchstr.c_str());
+		    inj_CH_vec.push_back(inj_CH);
+		}
+	    }
+	    
+	    else if ( line.find("acquisitionType") != -1 ){
+		start = line.find(":");
+		searchstr = line.erase(0, start+2);
+		acquisitionType = searchstr;
+		if ( acquisitionType == "sweep" ) 
+		    inj_sweep = true;
+		else
+		    inj_sweep = false;
+		cout << "acquisitionType = " << acquisitionType << endl;
+	    }
+	    else if ( line.find("moduleNumber") != -1 ){
+		start = line.find("moduleNumber:");
+		end = line.find(",");
+		searchstr = line.substr(start+14,end-start-14);
+		moduleNumber = searchstr;
+		cout << "moduleNumber = " << moduleNumber << endl;
+	    }
+	    else if (line.find("nEvent:") != -1 ){
+		int start = line.find(":");
+		string tmp_str = line.erase(0, start+2);
+		inj_event = atoi( tmp_str.c_str() );
+	    }
+	    else if ( line.find("chipId:") != -1 ) {
+		start = line.find(":");
+		searchstr = line.substr(start+1,end-start+1);
+		injChip = atoi(searchstr.c_str());
+		if ( injChip == -1 ) { 
+		    cout << "InjChip = " << injChip << endl;
+		    oneChannelInjection_flag = false;
+		}
+		else {
+		    injChip = 3 - injChip;
+		    cout << "InjChip = " << injChip << endl;
+		    oneChannelInjection_flag = true;
+		}
+	    }
 	}
-	//cout << inj_CH_str << endl;
-      }
     }
-
-    if(line.find("nEvent: ")){
-	int start = line.find(":");
-	string tmp_str = line.erase(0, start+2);
-	inj_event = atoi( tmp_str.c_str() );
-    }
-      
-    //cout << " Line: " << line_label << ", " << line << endl;
-    line_label++;
-  }
-
-  cout << "type: " << inj_sweep << ", CH:" << inj_CH << ", evt = " << inj_event << endl;
-
+    cout << "type: " << inj_sweep << ", CH:" << inj_CH << ", evt = " << inj_event << endl;
+    cout << endl;
 }
+
