@@ -326,7 +326,6 @@ void single_module::Read_yaml(string yaml){
 	return;
     }
     else{
-	cout << "yamlFile = " << yamlFileName << endl;
 	while( true ) {
 	    if ( yamlFile.eof() ) break;
 	    getline (yamlFile, line);
