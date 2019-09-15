@@ -351,7 +351,8 @@ void single_module::Read_yaml(string yaml){
     }
 
     if(line.find("nEvent: ")){
-	string tmp_str = line.substr(7,4);
+	int start = line.find(":");
+	string tmp_str = line.erase(0, start+2);
 	inj_event = atoi( tmp_str.c_str() );
     }
       
