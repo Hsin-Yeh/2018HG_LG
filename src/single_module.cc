@@ -324,7 +324,6 @@ void single_module::Read_yaml(string yaml){
 
     string searchstr;
     string line;
-    ifstream yamlFile(yamlFileName);
     int start, end;
     if(!yamlFile.is_open()){
 	cout << "Did not find injection file " << yamlFileName
