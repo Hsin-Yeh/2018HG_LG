@@ -339,7 +339,7 @@ void single_module::Read_yaml(string yaml){
 		inj_CH_vec.push_back(inj_CH);
 
 		if (start == -1) {
-		    getline(yamlFile, line);
+		    getline(yaml_in, line);
 		    start = line.find_last_of("-");
 		    searchstr = line.erase(0,start+2);
 		    inj_CH = atoi(searchstr.c_str());
