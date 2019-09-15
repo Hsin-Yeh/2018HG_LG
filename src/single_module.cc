@@ -350,11 +350,9 @@ void single_module::Read_yaml(string yaml){
       }
     }
 
-    if(line_label == 9){
-      string before_str = "nEvent: ";
-      int start = line.find(before_str);
-      string tmp_str = line.substr(start+before_str.length());
-      inj_event = atoi( tmp_str.c_str() );
+    if(line.find("nEvent: ")){
+	string tmp_str = line.substr(7,4);
+	inj_event = atoi( tmp_str.c_str() );
     }
       
     //cout << " Line: " << line_label << ", " << line << endl;
