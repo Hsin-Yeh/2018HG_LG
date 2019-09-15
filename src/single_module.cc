@@ -327,8 +327,8 @@ void single_module::Read_yaml(string yaml){
     }
     else{
 	while( true ) {
-	    if ( yamlFile.eof() ) break;
-	    getline (yamlFile, line);
+	    if ( yaml_in.eof() ) break;
+	    getline (yaml_in, line);
 	  
 	    if ( line.find("channelIds:") != -1 ){
 		string tmp;
