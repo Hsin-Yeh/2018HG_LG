@@ -315,21 +315,17 @@ void single_module::Setname(){
 void single_module::Read_yaml(string yaml){
 
     cout << "yaml file: " << yaml << endl;
+    string searchstr;
+    string line;
+    int start, end;
+
     
     ifstream yaml_in(yaml);
     if(!yaml_in.is_open()){
 	Correct_path_message();
 	return;
     }
-
-    string searchstr;
-    string line;
-    int start, end;
-    if(!yamlFile.is_open()){
-	cout << "Did not find injection file " << yamlFileName
-	     << ".\n Take this run as pedestal.(Inj_dac = 0)" << endl;
-    }
-    if(yamlFile.is_open()){
+    else{
 	cout << "yamlFile = " << yamlFileName << endl;
 	while( true ) {
 	    if ( yamlFile.eof() ) break;
