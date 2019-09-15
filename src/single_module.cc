@@ -325,6 +325,7 @@ void single_module::Read_yaml(string yaml){
     string searchstr;
     string line;
     ifstream yamlFile(yamlFileName);
+    int start, end;
     if(!yamlFile.is_open()){
 	cout << "Did not find injection file " << yamlFileName
 	     << ".\n Take this run as pedestal.(Inj_dac = 0)" << endl;
@@ -355,38 +356,17 @@ void single_module::Read_yaml(string yaml){
 	    else if ( line.find("acquisitionType") != -1 ){
 		start = line.find(":");
 		searchstr = line.erase(0, start+2);
-		acquisitionType = searchstr;
+		string acquisitionType = searchstr;
 		if ( acquisitionType == "sweep" ) 
 		    inj_sweep = true;
 		else
 		    inj_sweep = false;
 		cout << "acquisitionType = " << acquisitionType << endl;
 	    }
-	    else if ( line.find("moduleNumber") != -1 ){
-		start = line.find("moduleNumber:");
-		end = line.find(",");
-		searchstr = line.substr(start+14,end-start-14);
-		moduleNumber = searchstr;
-		cout << "moduleNumber = " << moduleNumber << endl;
-	    }
 	    else if (line.find("nEvent:") != -1 ){
 		int start = line.find(":");
 		string tmp_str = line.erase(0, start+2);
 		inj_event = atoi( tmp_str.c_str() );
-	    }
-	    else if ( line.find("chipId:") != -1 ) {
-		start = line.find(":");
-		searchstr = line.substr(start+1,end-start+1);
-		injChip = atoi(searchstr.c_str());
-		if ( injChip == -1 ) { 
-		    cout << "InjChip = " << injChip << endl;
-		    oneChannelInjection_flag = false;
-		}
-		else {
-		    injChip = 3 - injChip;
-		    cout << "InjChip = " << injChip << endl;
-		    oneChannelInjection_flag = true;
-		}
 	    }
 	}
     }
